@@ -1,0 +1,74 @@
+        "ADD_REPORTING_INDEXES",
+        @"
+        IF NOT EXISTS (
+            SELECT 1
+            FROM sys.indexes
+            WHERE name='IX_Transactions_Branch_Date'
+            AND object_id = OBJECT_ID('Transactions')
+        )
+            CREATE INDEX IX_Transactions_Branch_Date
+            ON Transactions(BranchId, CreatedAt);
+
+        IF NOT EXISTS (
+            SELECT 1
+            FROM sys.indexes
+            WHERE name='IX_Transactions_Receipt'
+            AND object_id = OBJECT_ID('Transactions')
+        )
+            CREATE INDEX IX_Transactions_Receipt
+            ON Transactions(ReceiptNumber);
+
+        IF NOT EXISTS (
+            SELECT 1
+            FROM sys.indexes
+            WHERE name='IX_Sales_Receipt'
+            AND object_id = OBJECT_ID('Sales')
+        )
+            CREATE INDEX IX_Sales_Receipt
+            ON Sales(ReceiptNumber);
+
+        IF NOT EXISTS (
+            SELECT 1
+            FROM sys.indexes
+            WHERE name='IX_Sales_CreatedAt'
+            AND object_id = OBJECT_ID('Sales')
+        )
+            CREATE INDEX IX_Sales_CreatedAt
+            ON Sales(CreatedAt);
+
+        IF NOT EXISTS (
+            SELECT 1
+            FROM sys.indexes
+            WHERE name='IX_Payments_Receipt'
+            AND object_id = OBJECT_ID('Payments')
+        )
+            CREATE INDEX IX_Payments_Receipt
+            ON Payments(ReceiptNumber);
+
+        IF NOT EXISTS (
+            SELECT 1
+            FROM sys.indexes
+            WHERE name='IX_Credits_Customer'
+            AND object_id = OBJECT_ID('Credits')
+        )
+            CREATE INDEX IX_Credits_Customer
+            ON Credits(CustomerId);
+
+        IF NOT EXISTS (
+            SELECT 1
+            FROM sys.indexes
+            WHERE name='IX_CreditPayments_Credit'
+            AND object_id = OBJECT_ID('CreditPayments')
+        )
+            CREATE INDEX IX_CreditPayments_Credit
+            ON CreditPayments(CreditId);
+
+        IF NOT EXISTS (
+            SELECT 1
+            FROM sys.indexes
+            WHERE name='IX_Returns_Date_Branch'
+            AND object_id = OBJECT_ID('Returns')
+        )
+            CREATE INDEX IX_Returns_Date_Branch
+            ON Returns(ReturnDate, BranchId);
+        "

@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+
+    <!-- VERSION INFO (ADD THIS) -->
+    <Version>1.9.3</Version>
+    <AssemblyVersion>1.9.3.0</AssemblyVersion>
+    <FileVersion>1.9.3.0</FileVersion>
+  
+   <!-- APP ICON -->
+    <ApplicationIcon>Assets\TechKingPOS.ico</ApplicationIcon>
+
+    <!-- Identity -->
+    <Company>TechDataKing</Company>
+    <Product>TechKingPOS</Product>
+    <Authors>TechKing</Authors>
+    <Description>TechKingPOS – Offline-first Point of Sale system</Description>
+    <Copyright> © 2026 TechDataKing</Copyright>
+    <PackageId>TechKingPOS</PackageId>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
+    <PackageReference Include="EPPlus" Version="8.4.0" />
+    <PackageReference Include="ExcelDataReader" Version="3.8.0" />
+    <PackageReference Include="ExcelDataReader.DataSet" Version="3.8.0" />
+    <PackageReference Include="itext7" Version="9.5.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.4" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.1" />
+    <PackageReference Include="QuestPDF" Version="2025.12.1" />
+    <PackageReference Include="System.Drawing.Common" Version="10.0.5" />
+    <PackageReference Include="System.Management" Version="10.0.2" />
+    <PackageReference Include="Tesseract" Version="5.2.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include="tessdata\eng.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

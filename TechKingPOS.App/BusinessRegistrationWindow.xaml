@@ -1,0 +1,1238 @@
+<Window x:Class="TechKingPOS.App.BusinessRegistrationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="TechKing POS - Business Registration"
+        Width="1100"
+        Height="680"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize"
+        Background="#F4F6FB">
+
+    <Grid Background="#F4F6FB">
+
+        <!-- Main Container -->
+
+        <Border
+            Margin="8"
+            Background="White"
+            BorderBrush="#DDDDDD"
+            BorderThickness="1"
+            CornerRadius="15">
+
+            <Grid>
+
+                <!--================================-->
+                <!-- MAIN COLUMNS -->
+                <!--================================-->
+
+                <Grid.ColumnDefinitions>
+
+                    <!-- Left Blue Panel -->
+                    <ColumnDefinition Width="280"/>
+
+                    <!-- Registration Panel -->
+                    <ColumnDefinition Width="*"/>
+
+                </Grid.ColumnDefinitions>
+
+                <!--================================-->
+                <!-- LEFT PANEL -->
+                <!--================================-->
+
+                <Border
+                    Grid.Column="0"
+                    Background="#3046D3"
+                    CornerRadius="15,0,0,15">
+
+                    <Grid Margin="8">
+
+                        <Grid.RowDefinitions>
+
+                            <!-- Logo -->
+                            <RowDefinition Height="Auto"/>
+
+                            <!-- Store Image -->
+                            <RowDefinition Height="220"/>
+
+                            <!-- Welcome -->
+                            <RowDefinition Height="Auto"/>
+
+                            <!-- Features -->
+                            <RowDefinition Height="*"/>
+
+                            <!-- Bottom -->
+                            <RowDefinition Height="55"/>
+
+                        </Grid.RowDefinitions>
+
+                        <!-- ====================================== -->
+                        <!-- LOGO -->
+                        <!-- ====================================== -->
+
+                        <StackPanel
+                            Grid.Row="0"
+                            Orientation="Horizontal"
+                            Margin="0,3,0,8">
+
+                            <Border
+                                Width="52"
+                                Height="52"
+                                Background="#5667E8"
+                                CornerRadius="12">
+
+                                <TextBlock
+                                    Text="👑"
+                                    FontSize="28"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+
+                            </Border>
+
+                            <StackPanel Margin="6,0,0,0">
+
+                                <TextBlock
+                                    Text="TECHKING"
+                                    Foreground="#FDBA21"
+                                    FontWeight="Bold"
+                                    FontSize="28"/>
+
+                                <TextBlock
+                                    Text="POS SYSTEM"
+                                    Foreground="White"
+                                    FontSize="12"
+                                    />
+
+                            </StackPanel>
+
+                        </StackPanel>
+
+                        <!-- ====================================== -->
+                        <!-- STORE IMAGE -->
+                        <!-- ====================================== -->
+
+                        <Border
+                            Grid.Row="1"
+                            Width="220"
+                            Height="220"
+                            HorizontalAlignment="Center"
+                            Background="#4458DA"
+                            CornerRadius="110">
+
+                            <!-- Replace later with Image -->
+
+                            <TextBlock
+                                Text="🏪"
+                                FontSize="110"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+
+                        </Border>
+
+                        <!-- ====================================== -->
+                        <!-- WELCOME -->
+                        <!-- ====================================== -->
+
+                        <StackPanel
+                            Grid.Row="2"
+                            Margin="0,3,0,6">
+
+                            <TextBlock
+                                Text="Let's Get You Started!"
+                                Foreground="White"
+                                FontSize="18"
+                                FontWeight="Bold"
+                                TextAlignment="Center"/>
+
+                            <TextBlock
+                                Margin="3,6,6,0"
+                                Foreground="White"
+                                FontSize="14"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap"
+                                Text="Register your business to activate TechKing POS and start managing your sales like a pro."/>
+
+                        </StackPanel>
+
+                        <!-- ====================================== -->
+                        <!-- FEATURES -->
+                        <!-- ====================================== -->
+
+                        <StackPanel
+                            Grid.Row="3"
+                            Margin="0,6,0,0">
+
+                            <!-- Feature 1 -->
+
+                            <Border
+                                Margin="0,0,0,6"
+                                Background="#4960DF"
+                                CornerRadius="12"
+                                Padding="3">
+
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Border
+                                        Width="42"
+                                        Height="42"
+                                        Background="#6A7BF0"
+                                        CornerRadius="10">
+
+                                        <TextBlock
+                                            Text="☁️"
+                                            FontSize="22"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+
+                                    </Border>
+
+                                    <StackPanel Margin="10,0,0,0">
+
+                                        <TextBlock
+                                            Text="Secure Cloud Sync"
+                                            Foreground="White"
+                                            FontWeight="SemiBold"
+                                            FontSize="14"/>
+
+                                        <TextBlock
+                                            Text="Sync your data safely"
+                                            Foreground="White"
+                                            FontSize="10"/>
+
+                                    </StackPanel>
+
+                                </StackPanel>
+
+                            </Border>
+
+                            <!-- Feature 2 -->
+
+                            <Border
+                                Margin="0,0,0,4"
+                                Background="#4960DF"
+                                CornerRadius="12"
+                                Padding="3">
+
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Border
+                                        Width="42"
+                                        Height="42"
+                                        Background="#6A7BF0"
+                                        CornerRadius="10">
+
+                                        <TextBlock
+                                            Text="🛡️"
+                                            FontSize="20"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+
+                                    </Border>
+
+                                    <StackPanel Margin="4,0,0,0">
+
+                                        <TextBlock
+                                            Text="Business Management"
+                                            Foreground="White"
+                                            FontWeight="SemiBold"
+                                            FontSize="14"/>
+
+                                        <TextBlock
+                                            Text="Manage branches &amp; users"
+                                            Foreground="White"
+                                            FontSize="12"/>
+
+                                    </StackPanel>
+
+                                </StackPanel>
+
+                            </Border>
+
+                            <!-- Feature 3 -->
+
+                            <Border
+                                Background="#4960DF"
+                                CornerRadius="12"
+                                Padding="3">
+
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Border
+                                        Width="42"
+                                        Height="42"
+                                        Background="#6A7BF0"
+                                        CornerRadius="10">
+
+                                        <TextBlock
+                                            Text="📊"
+                                            FontSize="20"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+
+                                    </Border>
+
+                                    <StackPanel Margin="4,0,0,0">
+
+                                        <TextBlock
+                                            Text="Powerful Reports"
+                                            Foreground="White"
+                                            FontWeight="SemiBold"
+                                            FontSize="14"/>
+
+                                        <TextBlock
+                                            Text="Grow your business"
+                                            Foreground="White"
+                                            FontSize="12"/>
+
+                                    </StackPanel>
+
+                                </StackPanel>
+
+                            </Border>
+
+                        </StackPanel>
+
+                        <!-- ====================================== -->
+                        <!-- BOTTOM -->
+                        <!-- ====================================== -->
+
+                        <Border
+                            Grid.Row="4"
+                            Margin="-18,10,-18,-18"
+                            Background="White">
+
+                            <StackPanel
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+
+                                <TextBlock
+                                    Text="Already registered?"
+                                    FontSize="14"
+                                    VerticalAlignment="Center"/>
+
+                                <TextBlock
+                                    Margin="8,0,0,0"
+                                    Text="Activate Now"
+                                    FontSize="14"
+                                    FontWeight="Bold"
+                                    Foreground="#4E5BFF"
+                                    Cursor="Hand"/>
+
+                            </StackPanel>
+
+                        </Border>
+
+                    </Grid>
+
+                </Border>
+
+                <!--================================-->
+                <!-- RIGHT PANEL -->
+                <!--================================-->
+
+                <Border
+                    Grid.Column="1"
+                    Margin="12"
+                    Background="White"
+                    CornerRadius="15">
+
+                    <Grid Margin="18">
+
+                        <!--========================================-->
+                        <!-- ROWS -->
+                        <!--========================================-->
+
+                        <Grid.RowDefinitions>
+
+                            <!-- Header -->
+                            <RowDefinition Height="Auto"/>
+
+                            <!-- Inputs -->
+                            <RowDefinition Height="*"/>
+
+                            <!-- Information -->
+                            <RowDefinition Height="Auto"/>
+
+                            <!-- Button -->
+                            <RowDefinition Height="Auto"/>
+
+                        </Grid.RowDefinitions>
+
+                        <!--========================================-->
+                        <!-- HEADER -->
+                        <!--========================================-->
+
+                        <!--========================================-->
+                        <!-- HEADER -->
+                        <!--========================================-->
+
+                        <Grid Grid.Row="0"
+                            Margin="0,5,0,15">
+
+                            <Grid.ColumnDefinitions>
+
+                                <!-- Icon -->
+                                <ColumnDefinition Width="120"/>
+
+                                <!-- Title -->
+                                <ColumnDefinition Width="*"/>
+
+                            </Grid.ColumnDefinitions>
+
+                            <!--================================-->
+                            <!-- ICON -->
+                            <!--================================-->
+
+                            <Border
+                                Width="95"
+                                Height="95"
+                                Background="#F3F0FF"
+                                BorderBrush="#D8CCFF"
+                                BorderThickness="1.5"
+                                CornerRadius="48"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+
+                                <TextBlock
+                                    Text="🏪"
+                                    FontSize="25"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+
+                            </Border>
+
+                            <!--================================-->
+                            <!-- TITLE -->
+                            <!--================================-->
+
+                            <StackPanel
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Margin="6,0,0,0">
+
+                                <TextBlock
+                                    Text="Business Registration"
+                                    FontSize="24"
+                                    FontWeight="Bold"
+                                    Foreground="#1D2452"/>
+
+                                <TextBlock
+                                    Margin="0,4,0,0"
+                                    Text="Please enter your business information below."
+                                    FontSize="14"
+                                    Foreground="#6C7293"/>
+
+                            </StackPanel>
+
+                        </Grid>
+
+                        <Grid
+                            Grid.Row="1"
+                            Margin="0,8,0,8">
+
+                            <!--===============================-->
+                            <!-- ROWS -->
+                            <!--===============================-->
+
+                            <Grid.RowDefinitions>
+
+                                <!-- Business Name / Code -->
+                                <RowDefinition Height="Auto"/>
+
+                                <!-- Owner / Phone -->
+                                <RowDefinition Height="Auto"/>
+
+                                <!-- Email / Town -->
+                                <RowDefinition Height="Auto"/>
+
+                                <!-- Business Address -->
+                                <RowDefinition Height="Auto"/>
+
+                                <!-- Password / Confirm Password -->
+                                <RowDefinition Height="Auto"/>
+
+                            </Grid.RowDefinitions>
+
+                            <!--===============================-->
+                            <!-- COLUMNS -->
+                            <!--===============================-->
+
+                            <Grid.ColumnDefinitions>
+
+                                <!-- Left Side -->
+                                <ColumnDefinition Width="*"/>
+
+                                <!-- Space Between -->
+                                <ColumnDefinition Width="25"/>
+
+                                <!-- Right Side -->
+                                <ColumnDefinition Width="*"/>
+
+                            </Grid.ColumnDefinitions>
+
+                            <!--====================================================-->
+                            <!-- ROW 1 -->
+                            <!--====================================================-->
+
+                            <Grid
+                                x:Name="BusinessNameSection"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="0,0,0,4">
+
+                                <Grid.RowDefinitions>
+
+                                    <RowDefinition Height="Auto"/>
+
+                                    <RowDefinition Height="Auto"/>
+
+                                </Grid.RowDefinitions>
+
+                                <!-- Label -->
+
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Margin="0,0,0,5">
+
+                                    <TextBlock
+                                        Text="🏪"
+                                        FontSize="16"
+                                        VerticalAlignment="Center"/>
+
+                                    <TextBlock
+                                        Margin="6,0,0,0"
+                                        Text="Business Name"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="#353C5E"/>
+
+                                </StackPanel>
+
+                                <!-- TextBox -->
+
+                                <Border
+                                    Grid.Row="1"
+                                    Height="32"
+                                    Background="White"
+                                    BorderBrush="#D8DCEA"
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+
+                                    <Grid>
+
+                                        <TextBox
+                                            x:Name="BusinessNameTextBox"
+                                            BorderThickness="0"
+                                            Background="Transparent"
+                                            FontSize="14"
+                                            Padding="12,0"
+                                            VerticalContentAlignment="Center"
+                                            TextChanged="Placeholder_TextChanged"
+                                            GotFocus="Placeholder_GotFocus"
+                                            LostFocus="Placeholder_LostFocus"/>
+
+                                        <TextBlock
+                                            x:Name="BusinessNamePlaceholder"
+                                            Text="Enter Business Name"
+                                            Margin="14,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="#9CA3AF"
+                                            IsHitTestVisible="False"/>
+
+                                    </Grid>
+
+                                </Border>
+
+                            </Grid>
+
+                            <Grid
+                                x:Name="BusinessCodeSection"
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                Margin="0,0,0,4">
+
+                                <Grid.RowDefinitions>
+
+                                    <RowDefinition Height="Auto"/>
+
+                                    <RowDefinition Height="Auto"/>
+
+                                </Grid.RowDefinitions>
+
+                                <!-- Label -->
+
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Margin="0,0,0,5">
+
+                                    <TextBlock
+                                        Text="#️⃣"
+                                        FontSize="16"
+                                        VerticalAlignment="Center"/>
+
+                                    <TextBlock
+                                        Margin="6,0,0,0"
+                                        Text="Business Code (Auto)"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="#353C5E"/>
+
+                                </StackPanel>
+
+                                <!-- Readonly TextBox -->
+
+                                <Border
+                                    Grid.Row="1"
+                                    Height="32"
+                                    Background="#F8F8FB"
+                                    BorderBrush="#D8DCEA"
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+
+                                    <Grid>
+
+                                        <Grid.ColumnDefinitions>
+
+                                            <ColumnDefinition/>
+
+                                            <ColumnDefinition Width="40"/>
+
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBox
+                                            x:Name="BusinessCodeTextBox"
+                                            Margin="6,0,0,0"
+                                            BorderThickness="0"
+                                            Background="Transparent"
+                                            FontSize="14"
+                                            VerticalContentAlignment="Center"
+                                            IsReadOnly="True"
+                                            Text="Will be generated"/>
+
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Text="🔒"
+                                            FontSize="16"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+
+                                    </Grid>
+
+                                </Border>
+
+                            </Grid>
+
+                            <!--====================================================-->
+                            <!-- ROW 2 -->
+                            <!--====================================================-->
+
+                            <Grid
+                                x:Name="OwnerSection"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Margin="0,0,0,12">
+                                <Grid.RowDefinitions>
+
+                                    <RowDefinition Height="Auto"/>
+
+                                    <RowDefinition Height="Auto"/>
+
+                                </Grid.RowDefinitions>
+
+                                <!-- Label -->
+
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Margin="0,0,0,5">
+
+                                    <TextBlock
+                                        Text="#️⃣"
+                                        FontSize="16"
+                                        
+                                        VerticalAlignment="Center"/>
+
+                                    <TextBlock
+                                        Margin="6,0,0,0"
+                                        Text="Owner Full Name"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="#0410BE"/>
+
+                                </StackPanel>
+
+                                <!-- Readonly TextBox -->
+
+                                <Border
+                                    Grid.Row="1"
+                                    Height="32"
+                                    Background="#F8F8FB"
+                                    BorderBrush="#0410BE"
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+                                    <Grid>
+
+                                        <TextBox
+                                            x:Name="OwnerTextBox"
+                                            BorderThickness="0"
+                                            Background="Transparent"
+                                            FontSize="14"
+                                            VerticalContentAlignment="Center"
+                                            TextChanged="Placeholder_TextChanged"
+                                            GotFocus="Placeholder_GotFocus"
+                                            LostFocus="Placeholder_LostFocus"/>
+
+                                        <TextBlock
+                                            x:Name="OwnerPlaceholder"
+                                            Text="Enter Owner Full Name"
+                                            Margin="14,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="#9CA3AF"
+                                            IsHitTestVisible="False"/>
+                                            
+                                            
+                                    </Grid>
+                                </Border>
+
+
+                            </Grid>
+
+                            <Grid
+                                x:Name="PhoneSection"
+                                Grid.Row="1"
+                                Grid.Column="2"
+                                Margin="0,0,0,12">
+                                <Grid.RowDefinitions>
+
+                                    <RowDefinition Height="Auto"/>
+
+                                    <RowDefinition Height="Auto"/>
+
+                                </Grid.RowDefinitions>
+
+                                <!-- Label -->
+
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Margin="0,0,0,5">
+
+                                    <TextBlock
+                                        Text="📞"
+                                        FontSize="16"
+                                        VerticalAlignment="Center"/>
+
+                                    <TextBlock
+                                        Margin="6,0,0,0"
+                                        Text="Phone Number"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="#04A158"/>
+
+                                </StackPanel>
+
+                                <!-- Readonly TextBox -->
+
+                                <Border
+                                    Grid.Row="1"
+                                    Height="32"
+                                    Background="#F8F8FB"
+                                    BorderBrush="#04A158"
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+                                    
+                                    <Grid>
+
+                                        <TextBox
+                                            Margin="6,0,0,0"
+                                            BorderThickness="0"
+                                            Background="Transparent"
+                                            FontSize="14"
+                                            VerticalContentAlignment="Center"
+                                            x:Name="PhoneTextBox"
+                                            TextChanged="Placeholder_TextChanged"
+                                            GotFocus="Placeholder_GotFocus"
+                                            
+                                            LostFocus="Placeholder_LostFocus"/>
+
+                                        <TextBlock
+                                            x:Name="PhonePlaceholder"
+                                            Text="Enter Phone Number"
+                                            Margin="14,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="#9CA3AF"
+                                            IsHitTestVisible="False"/>
+                                    </Grid>
+
+
+                                </Border>
+
+
+                            </Grid>
+
+                            <!--====================================================-->
+                            <!-- ROW 3 -->
+                            <!--====================================================-->
+
+                            <Grid
+                                x:Name="EmailSection"
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Margin="0,0,0,12">
+                                <Grid.RowDefinitions>
+
+                                    <RowDefinition Height="Auto"/>
+
+                                    <RowDefinition Height="Auto"/>
+
+                                </Grid.RowDefinitions>
+
+                                <!-- Label -->
+
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Margin="0,0,0,5">
+
+                                    <TextBlock
+                                        Text="✉️"
+                                        FontSize="16"
+                                        VerticalAlignment="Center"/>
+
+                                    <TextBlock
+                                        Margin="6,0,0,0"
+                                        Text="Email Address"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="#D308A7"/>
+
+                                </StackPanel>
+
+                                <!-- Readonly TextBox -->
+
+                                <Border
+                                    Grid.Row="1"
+                                    Height="32"
+                                    Background="#F8F8FB"
+                                    BorderBrush="#D308A7"
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+
+                                    <Grid>
+                                        <TextBox
+                                            x:Name="EmailTextBox"
+                                            Margin="6,0,0,0"
+                                            BorderThickness="0"
+                                            Background="Transparent"
+                                            FontSize="14"
+                                            VerticalContentAlignment="Center"
+                                            TextChanged="Placeholder_TextChanged"
+                                            GotFocus="Placeholder_GotFocus"
+                                            LostFocus="Placeholder_LostFocus"/>
+
+                                        <TextBlock
+                                            x:Name="EmailPlaceholder"
+                                            Text="Enter Email Address"
+                                            Margin="14,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="#9CA3AF"
+                                            IsHitTestVisible="False"/>
+                                    </Grid>
+
+
+                                </Border>
+
+
+                            </Grid>
+
+                            <Grid
+                                x:Name="TownSection"
+                                Grid.Row="2"
+                                Grid.Column="2"
+                                Margin="0,0,0,12">
+                                <Grid.RowDefinitions>
+
+                                    <RowDefinition Height="Auto"/>
+
+                                    <RowDefinition Height="Auto"/>
+
+                                </Grid.RowDefinitions>
+
+                                <!-- Label -->
+
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Margin="0,0,0,5">
+
+                                    <TextBlock
+                                        Text="📍"
+                                        FontSize="16"
+                                        VerticalAlignment="Center"/>
+
+                                    <TextBlock
+                                        Margin="6,0,0,0"
+                                        Text="Town / City"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="#076B99"/>
+
+                                </StackPanel>
+
+                                <!-- Readonly TextBox -->
+
+                                <Border
+                                    Grid.Row="1"
+                                    Height="32"
+                                    Background="#F8F8FB"
+                                    BorderBrush="#076B99"
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+                                    <Grid>
+
+                                        <TextBox
+                                            x:Name="TownTextBox"
+                                            Margin="6,0,0,0"
+                                            BorderThickness="0"
+                                            Background="Transparent"
+                                            FontSize="14"
+                                            VerticalContentAlignment="Center"
+                                            TextChanged="Placeholder_TextChanged"
+                                            GotFocus="Placeholder_GotFocus"
+                                            LostFocus="Placeholder_LostFocus"/>
+
+                                        <TextBlock
+                                            x:Name="TownPlaceholder"
+                                            Text="Enter Town / City"
+                                            Margin="14,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="#9CA3AF"
+                                            IsHitTestVisible="False"/>
+                                    </Grid>
+
+
+
+                                </Border>
+
+
+                            </Grid>
+
+                            <!--====================================================-->
+                            <!-- ROW 4 -->
+                            <!--====================================================-->
+
+                            <Grid
+                                x:Name="AddressSection"
+                                Grid.Row="3"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                Margin="0,0,0,12">
+                                <Grid.RowDefinitions>
+
+                                    <RowDefinition Height="Auto"/>
+
+                                    <RowDefinition Height="Auto"/>
+
+                                </Grid.RowDefinitions>
+
+                                <!-- Label -->
+
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Margin="0,0,0,5">
+
+                                    <TextBlock
+                                        Text="🏠"
+                                        FontSize="16"
+                                        VerticalAlignment="Center"/>
+
+                                    <TextBlock
+                                        Margin="6,0,0,0"
+                                        Text="Business Address"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="#DBBD14"/>
+
+                                </StackPanel>
+
+                                <!-- Readonly TextBox -->
+
+                                <Border
+                                    Grid.Row="1"
+                                    Height="32"
+                                    Background="#F8F8FB"
+                                    BorderBrush="#DBBD14"
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+                                    <Grid>
+                                        <TextBox
+                                            x:Name="AddressTextBox"
+                                            Margin="6,0,0,0"
+                                            BorderThickness="0"
+                                            Background="Transparent"
+                                            FontSize="14"
+                                            VerticalContentAlignment="Center"
+                                            TextChanged="Placeholder_TextChanged"
+                                            GotFocus="Placeholder_GotFocus"
+                                            LostFocus="Placeholder_LostFocus"/>
+
+                                        <TextBlock
+                                            x:Name="AddressPlaceholder"
+                                            Text="Enter Business Address"
+                                            Margin="14,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="#9CA3AF"
+                                            IsHitTestVisible="False"/>
+                                    </Grid>
+
+                                </Border>
+
+
+                            </Grid>
+
+                            <!--====================================================-->
+                            <!-- ROW 5 -->
+                            <!--====================================================-->
+
+                            <Grid
+                                x:Name="PasswordSection"
+                                Grid.Row="4"
+                                Grid.Column="0">
+                                <Grid.RowDefinitions>
+
+                                    <RowDefinition Height="Auto"/>
+
+                                    <RowDefinition Height="Auto"/>
+
+                                </Grid.RowDefinitions>
+
+                                <!-- Label -->
+
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Margin="0,0,0,5">
+
+                                    <TextBlock
+                                        Text="🔒"
+                                        FontSize="16"
+                                        VerticalAlignment="Center"/>
+
+                                    <TextBlock
+                                        Margin="6,0,0,0"
+                                        Text="Password Section"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="#14DBCA"/>
+
+                                </StackPanel>
+
+                                <!-- Readonly TextBox -->
+
+                                <Border
+                                    Grid.Row="1"
+                                    Height="32"
+                                    Background="#F8F8FB"
+                                    BorderBrush="#14DBCA"
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+
+
+                                        <PasswordBox
+                                            x:Name="PasswordTextBox"
+                                            Margin="6,0,0,0"
+                                            BorderThickness="0"
+                                            Background="Transparent"
+                                            FontSize="14"
+                                            VerticalContentAlignment="Center"/>
+
+                                   
+
+                                </Border>
+
+
+                            </Grid>
+
+                            <Grid
+                                x:Name="ConfirmPasswordSection"
+                                Grid.Row="4"
+                                Grid.Column="2">
+                                <Grid.RowDefinitions>
+
+                                    <RowDefinition Height="Auto"/>
+
+                                    <RowDefinition Height="Auto"/>
+
+                                </Grid.RowDefinitions>
+
+                                <!-- Label -->
+
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Margin="0,0,0,5">
+
+                                    <TextBlock
+                                        Text="🔐"
+                                        FontSize="16"
+                                        VerticalAlignment="Center"/>
+
+                                    <TextBlock
+                                        Margin="6,0,0,0"
+                                        Text="Confirm Password"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="#14DBCA"/>
+
+                                </StackPanel>
+
+                                <!-- Readonly TextBox -->
+
+                                <Border
+                                    Grid.Row="1"
+                                    Height="32"
+                                    Background="#F8F8FB"
+                                    BorderBrush="#14DBCA"
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+
+
+
+                                        <PasswordBox
+                                            x:Name="ConfirmTextBox"
+                                            Margin="6,0,0,0"
+                                            BorderThickness="0"
+                                            Background="Transparent"
+                                            FontSize="14"
+                                            VerticalContentAlignment="Center"
+                                            />
+
+
+
+                                </Border>
+
+
+                            </Grid>
+
+                        </Grid>
+                        <!--========================================-->
+                        <!-- INFORMATION CARD -->
+                        <!--========================================-->
+
+                        <Border
+                            Grid.Row="2"
+                            x:Name="InformationCard"
+                            Margin="0,3,0,6"
+                            Padding="8"
+                            Background="#EEF5FF"
+                            BorderBrush="#C9DDFB"
+                            BorderThickness="1"
+                            CornerRadius="12">
+
+                            <Grid>
+
+                                <Grid.ColumnDefinitions>
+
+                                    <ColumnDefinition Width="55"/>
+
+                                    <ColumnDefinition Width="*"/>
+
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Shield -->
+
+                                <Border
+                                    Width="42"
+                                    Height="30"
+                                    Background="#DCEBFF"
+                                    CornerRadius="21"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Top">
+
+                                    <TextBlock
+                                        Text="🛡️"
+                                        FontSize="20"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"/>
+
+                                </Border>
+
+                                <!-- Text -->
+
+                                <StackPanel
+                                    Grid.Column="1">
+
+                                    <TextBlock
+                                        Text="Your business information is secure and will be used to create your cloud account."
+                                        FontSize="11"
+                                        FontWeight="SemiBold"
+                                        Foreground="#1F3C88"
+                                        TextWrapping="Wrap"/>
+
+                                  
+
+                                    <TextBlock
+                                        Margin="0,3,0,0"
+                                        Text="✔ Unlimited branches after registration"
+                                        FontSize="10"
+                                        Foreground="#16A34A"/>
+
+                                
+
+                                </StackPanel>
+
+                            </Grid>
+
+                        </Border>
+                        <!--========================================-->
+                        <!-- REGISTER BUTTON -->
+                        <!--========================================-->
+
+                        <Grid
+                            Grid.Row="3"
+                            x:Name="ButtonGrid">
+                            <Grid.ColumnDefinitions>
+
+                                    <ColumnDefinition Width="*"/>
+
+                                    <ColumnDefinition Width="200"/>
+
+                                </Grid.ColumnDefinitions>
+                               
+                                <TextBlock
+                                    x:Name="StatusText"
+                                    Margin="0,8,0,0"
+                                    HorizontalAlignment="Right"
+                                    Foreground="#6B7280"
+                                    FontSize="12"
+                                    Text=""/>
+
+                                <Border
+                                    Grid.Column="1"
+                                    Width="180"
+                                    Height="30"
+                                    Background="#5B4DFF"
+                                    CornerRadius="12"
+                                    HorizontalAlignment="Right"
+                                    >
+
+                                    <Button
+                                        x:Name="RegisterButton"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Foreground="White"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Cursor="Hand"
+                                        Content="🚀  Register Business"
+                                        Click="RegisterButton_Click"/>
+
+                                </Border>
+
+                        </Grid>
+
+                    </Grid>
+
+                </Border>
+
+            </Grid>
+
+        </Border>
+
+    </Grid>
+
+</Window>

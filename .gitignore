@@ -1,0 +1,39 @@
+#
+# Build folders
+bin/
+obj/
+
+# Installer folder
+Installer/
+installer/
+
+# Ignore appsettings file inside the Models folder
+TechKingPOS.App/Security/AppSettings.json
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# VS Code
+.vscode/
+
+# NuGet packages
+packages/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store

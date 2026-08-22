@@ -1,0 +1,1249 @@
+<Window x:Class="TechKingPOS.App.ManageStockWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Manage Stock"
+        Height="650"
+        Width="1000"
+        Background="#F4F6F8"
+        Loaded="Window_Loaded"
+        WindowStartupLocation="CenterScreen">
+
+    <!-- ================= RESOURCES ================= -->
+    <Window.Resources>
+        <!-- WATERMARK TEXTBOX -->
+<Style x:Key="WatermarkTextBox" TargetType="TextBox">
+    <Setter Property="Height" Value="40"/>
+    <Setter Property="Padding" Value="12,8"/>
+    <Setter Property="FontSize" Value="14"/>
+    <Setter Property="VerticalContentAlignment" Value="Center"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="TextBox">
+                <Grid>
+                    <ScrollViewer x:Name="PART_ContentHost"
+              Padding="{TemplateBinding Padding}"
+              VerticalAlignment="Stretch"/>
+
+
+                    <TextBlock Text="{TemplateBinding Tag}"
+                               Margin="12,0,0,0"
+                               Foreground="#777"
+                               FontSize="14"
+                               VerticalAlignment="Center"
+                               IsHitTestVisible="False">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text.Length,
+                                            RelativeSource={RelativeSource TemplatedParent}}"
+                                                 Value="0">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                    
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
+                </Grid>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
+
+        <!-- TAB ITEM STYLE -->
+        <Style TargetType="TabItem">
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Padding" Value="22,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+         <!-- New Watermark TextBox With Border -->
+    <Style x:Key="WatermarkTextBoxWithBorder" TargetType="TextBox">
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Padding" Value="8,4"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="BorderBrush" Value="Gray"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" 
+                            CornerRadius="4">
+                        <Grid>
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Padding="{TemplateBinding Padding}"
+                                          VerticalAlignment="Stretch"/>
+                            <TextBlock Text="{TemplateBinding Tag}"
+                                       Margin="12,0,0,0"
+                                       Foreground="#777"
+                                       FontSize="14"
+                                       VerticalAlignment="Center"
+                                       IsHitTestVisible="False">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text.Length,
+                                                RelativeSource={RelativeSource TemplatedParent}}" Value="0">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="DodgerBlue"/>
+                            <Setter TargetName="Border" Property="BorderThickness" Value="1.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+    </Window.Resources>
+
+    <Grid Margin="15">
+<TabControl
+    x:Name="StockTabs"
+    SelectionChanged="StockTabs_SelectionChanged"
+    PreviewMouseLeftButtonDown="StockTabs_PreviewMouseLeftButtonDown">
+
+            <!-- ================= TARGETS TAB ================= -->
+            <TabItem Header=" Targets "
+                 Tag="stock.targets" Loaded="StockTabItem_Loaded"
+                >
+                <Border Padding="15" Background="White">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Search -->
+                        <TextBox x:Name="TargetSearchBox"
+                                 Style="{StaticResource WatermarkTextBox}"
+                                 Tag="Search item name..."
+                                 Margin="0,0,0,15"/>
+
+                        <!-- Grid -->
+                        <DataGrid x:Name="TargetGrid"
+                                  Grid.Row="1"
+                                  AutoGenerateColumns="False"
+                                  CanUserAddRows="False"
+                                  IsReadOnly="True"
+                                  FontSize="14"
+                                  RowHeight="40"
+                                  HeadersVisibility="Column"
+                                  GridLinesVisibility="None">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Item"
+                                                    Binding="{Binding Name}"
+                                                    Width="*" />
+
+                                <DataGridTextColumn Header="Qty"
+                                                    Binding="{Binding Quantity}"
+                                                    Width="120" />
+
+                                <DataGridTextColumn Header="Target"
+                                                    Binding="{Binding TargetQuantity}"
+                                                    Width="120" />
+
+                                <DataGridTemplateColumn Header="Action" Width="140">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Set Target"
+                                                    Height="30"
+                                                    Padding="10,4"
+                                                    Background="#43A047"
+                                                    Foreground="White"
+                                                    Click="SetTarget_Click"
+                                                    Tag="{Binding}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+            </TabItem>
+
+            <!-- ================= EDIT ITEMS TAB ================= -->
+           <!-- ================= EDIT ITEMS TAB ================= -->
+<TabItem Header=" Edit Item " Tag="stock.edit_item">
+    <Border Padding="15" Background="White">
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <!-- LEFT -->
+                <ColumnDefinition Width="280"/>
+
+                <!-- SPACE -->
+                <ColumnDefinition Width="15"/>
+
+                <!-- RIGHT AUTO EXPANDS -->
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- ================= LEFT PANEL ================= -->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBox x:Name="EditSearchBox"
+                         Style="{StaticResource WatermarkTextBox}"
+                         Tag="Search item..."
+                         Margin="0,0,0,12"/>
+
+                <!-- REMOVED FIXED HEIGHT -->
+                <ListBox x:Name="EditItemsList"
+                         Grid.Row="1"
+                         FontSize="14"
+                         DisplayMemberPath="Name"/>
+            </Grid>
+
+            <!-- ================= RIGHT PANEL ================= -->
+            <Border Grid.Column="2"
+                    Padding="20"
+                    CornerRadius="8"
+                    Background="#FAFAFA"
+                    BorderBrush="#DDD"
+                    BorderThickness="1">
+
+                <!-- IMPORTANT -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+                    <StackPanel>
+
+                        <TextBlock Text="Edit Item"
+                                   FontSize="20"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,20"/>
+                        <UniformGrid Columns="2"
+                                     Margin="0,0,0,10">
+                        <StackPanel>
+                            <!-- Barcode -->
+                        <TextBlock Text="Barcode"/>
+                        <TextBox x:Name="BarcodeBox"
+                                 Height="36"
+                                 Padding="10,7"
+                                 VerticalContentAlignment="Center"
+                                 Margin="0,6,0,14"/>
+                        </StackPanel>
+                        <StackPanel Margin="10,0,0,0">
+                        <!-- NAME -->
+                        <TextBlock Text="Item Name"/>
+                        <TextBox x:Name="NameBox"
+                                 Height="36"
+                                 Padding="10,7"
+                                 VerticalContentAlignment="Center"
+                                 Margin="0,6,0,14"/>
+                        </StackPanel>
+                           </UniformGrid>
+
+                        <!-- ALIAS -->
+                        <TextBlock Text="Alias"/>
+                        <TextBox x:Name="AliasBox"
+                                 Height="36"
+                                 Padding="10,7"
+                                 VerticalContentAlignment="Center"
+                                 Margin="0,6,0,14"/>
+
+                        <!-- QUANTITY -->
+                        <TextBlock Text="Quantity"/>
+                        <TextBox x:Name="QtyBox"
+                                 Height="36"
+                                 Padding="10,7"
+                                 VerticalContentAlignment="Center"
+                                 Margin="0,6,0,14"/>
+
+                        <!-- PRICES -->
+                        <UniformGrid Columns="3"
+                                     Margin="0,0,0,10">
+
+                            <StackPanel Margin="0,0,10,0">
+                                <TextBlock Text="Marked Price"/>
+                                <TextBox x:Name="MPBox"
+                                         Height="36"
+                                         Padding="10,7"
+                                         VerticalContentAlignment="Center"
+                                         Margin="0,6,0,0"/>
+                            </StackPanel>
+
+                            <StackPanel Margin="0,0,10,0">
+                                <TextBlock Text="Selling Price"/>
+                                <TextBox x:Name="SPBox"
+                                         Height="36"
+                                         Padding="10,7"
+                                         VerticalContentAlignment="Center"
+                                         Margin="0,6,0,0"/>
+                            </StackPanel>
+
+                            <StackPanel>
+                                <TextBlock Text="Wholesale Price"/>
+                                <TextBox x:Name="WPBox"
+                                         Height="36"
+                                         Padding="10,7"
+                                         VerticalContentAlignment="Center"
+                                         Margin="0,6,0,0"/>
+                            </StackPanel>
+
+                        </UniformGrid>
+
+                        <!-- TARGET -->
+                        <TextBlock Text="Target Quantity"/>
+                        <TextBox x:Name="TargetBox"
+                                 Height="36"
+                                 Padding="10,7"
+                                 VerticalContentAlignment="Center"
+                                 Margin="0,6,0,20"/>
+
+                        <!-- BUTTONS -->
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Right">
+
+                            <Button Content="Delete"
+                                    Width="100"
+                                    Height="34"
+                                    Margin="0,0,12,0"
+                                    Background="#E53935"
+                                    Foreground="White"
+                                    Click="Delete_Click"/>
+
+                            <Button Content="Save"
+                                    Width="100"
+                                    Height="34"
+                                    Background="#1E88E5"
+                                    Foreground="White"
+                                    Click="Save_Click"/>
+                        </StackPanel>
+
+                    </StackPanel>
+
+                </ScrollViewer>
+            </Border>
+
+        </Grid>
+    </Border>
+</TabItem>
+<!-- ================= DAMAGED GOODS TAB ================= -->
+<TabItem Header=" Damaged " Tag="stock.damaged">
+    <Border Padding="15" Background="White">
+        <Grid>
+            <!-- 3 COLUMNS -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="260"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- ================= LEFT : ITEM SEARCH ================= -->
+            <Border Grid.Column="0"
+                    Padding="12"
+                    Margin="0,0,10,0"
+                    Background="#FAFAFA"
+                    BorderBrush="#DDD"
+                    BorderThickness="1"
+                    CornerRadius="6">
+
+                <DockPanel LastChildFill="True">
+
+                    <!-- Search -->
+                    <TextBox DockPanel.Dock="Top"
+                             Style="{StaticResource WatermarkTextBox}"
+                             TextChanged="DamagedSearchBox_TextChanged"
+                             Tag="Search item / alias..."
+                             Margin="0,0,0,10"/>
+
+                    <!-- Items List -->
+                    <ListBox x:Name="DamagedItemSearchList"
+                             FontSize="14"
+                               SelectionChanged="DamagedItemSearchList_SelectionChanged"/>
+
+                </DockPanel>
+            </Border>
+
+            <!-- ================= MIDDLE : DAMAGED ENTRY ================= -->
+            <Border Grid.Column="1"
+                    Padding="20"
+                    Margin="0,0,10,0"
+                    Background="#FAFAFA"
+                    BorderBrush="#DDD"
+                    BorderThickness="1"
+                    CornerRadius="6">
+
+                <StackPanel>
+
+    <TextBlock Text="Mark Damaged Item"
+               FontSize="18"
+               FontWeight="SemiBold"
+               Margin="0,0,0,15"/>
+
+    <TextBlock Text="Item Name"/>
+    <TextBox x:Name="DamagedNameBox"
+             Height="34"
+             IsReadOnly="True"
+             Margin="0,5,0,10"/>
+
+    <TextBlock Text="Alias"/>
+    <TextBox x:Name="DamagedAliasBox"
+             Height="34"
+             IsReadOnly="True"
+             Margin="0,5,0,10"/>
+
+    <TextBlock Text="Current Stock"/>
+    <TextBox x:Name="DamagedStockBox"
+             Height="34"
+             IsReadOnly="True"
+             Margin="0,5,0,10"/>
+
+    <TextBlock Text="Selling Price"/>
+    <TextBox x:Name="DamagedPriceBox"
+             Height="34"
+             IsReadOnly="True"
+             Margin="0,5,0,10"/>
+
+    <TextBlock Text="Damaged Quantity"/>
+    <TextBox x:Name="DamagedQtyBox"
+             Height="34"
+             Margin="0,5,0,15"/>
+
+    <!-- ================= REASON ================= -->
+    <TextBlock Text="Reason"/>
+
+    <ComboBox x:Name="DamageReasonCombo"
+              Height="34"
+              Margin="0,5,0,10"
+               SelectionChanged="DamageReasonCombo_SelectionChanged">
+         <ComboBoxItem Content="Select ... "/>      
+        <ComboBoxItem Content="Broken"/>
+        <ComboBoxItem Content="Expired"/>
+        <ComboBoxItem Content="Spoiled"/>
+        <ComboBoxItem Content="Lost"/>
+        <ComboBoxItem Content="Other"/>
+    </ComboBox>
+
+    <!-- OTHER REASON -->
+    <TextBox x:Name="OtherReasonBox"
+             Height="34"
+             Margin="0,0,0,20"
+             Visibility="Collapsed"
+             Tag="Specify other reason"/>
+
+    <!-- Buttons -->
+    <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Right">
+        <Button Content="Clear"
+                Width="90"
+                Height="34"
+                Margin="0,0,10,0"
+                Click = "ClearDamagedForm_Click"/>
+
+        <Button Content="Add"
+                Width="90"
+                Height="34"
+                Background="#1E88E5"
+                Foreground="White"
+                 Click="AddDamaged_Click"/>
+    </StackPanel>
+
+</StackPanel>
+
+            </Border>
+
+            <!-- ================= RIGHT : DAMAGED LIST ================= -->
+            <Border Grid.Column="2"
+                    Padding="12"
+                    Background="#FAFAFA"
+                    BorderBrush="#DDD"
+                    BorderThickness="1"
+                    CornerRadius="6">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/> <!-- Search -->
+                        <RowDefinition Height="*"/>   <!-- List -->
+                        <RowDefinition Height="Auto"/> <!-- Delete -->
+                    </Grid.RowDefinitions>
+
+                    <!-- Search -->
+                    <TextBox Grid.Row="0"
+                             Style="{StaticResource WatermarkTextBox}"
+                             Tag="Search damaged items..."
+                             Margin="0,0,0,10"/>
+
+                    <!-- Damaged Items List -->
+<!-- Damaged Items List -->
+<DataGrid x:Name="DamagedItemsList"
+          AutoGenerateColumns="False"
+          IsReadOnly="True"
+          CanUserAddRows="False"
+          SelectionMode="Single"
+          Margin="5"
+          BorderThickness="0"
+          GridLinesVisibility="None"
+          FontSize="14"
+          HeadersVisibility="Column">
+
+    <!-- Optional: slightly bigger header text -->
+    <DataGrid.ColumnHeaderStyle>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="FontSize" Value="14.5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+    </DataGrid.ColumnHeaderStyle>
+
+    <!-- Optional: increase row height a bit -->
+    <DataGrid.RowStyle>
+        <Style TargetType="DataGridRow">
+            <Setter Property="MinHeight" Value="32"/>
+        </Style>
+    </DataGrid.RowStyle>
+
+    <DataGrid.Columns>
+        <DataGridTextColumn Header="Item Name"
+                            Binding="{Binding Name}"
+                            Width="*" />
+
+        <DataGridTextColumn Header="Quantity"
+                            Binding="{Binding Quantity}"
+                            Width="80" />
+
+        <DataGridTextColumn Header="Buying Price"
+                            Binding="{Binding SellingPrice, StringFormat={}{0:0.00}}"
+                            Width="120" />
+
+        <DataGridTextColumn Header="Damaged At"
+                            Binding="{Binding CreatedAt, StringFormat={}{0:yyyy-MM-dd HH:mm}}"
+                            Width="160" />
+    </DataGrid.Columns>
+</DataGrid>
+
+
+
+                    <!-- Delete Button (Fixed) -->
+                    <Button Grid.Row="2"
+                            Content="Delete Selected"
+                            Height="38"
+                            Margin="0,10,0,0"
+                            Background="#E53935"
+                            Foreground="White"
+                            Click="DeleteDamaged_Click"/>
+                </Grid>
+            </Border>
+
+        </Grid>
+    </Border>
+</TabItem>
+
+            <!-- ================= REPACK TAB ================= -->
+<TabItem Header=" Repack " Tag="stock.repack">
+    <Border Padding="15" Background="White">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- ================= LEFT : BULK ITEMS ================= -->
+            <Border Grid.Column="0"
+                    Padding="12"
+                    Margin="0,0,10,0"
+                    Background="#FAFAFA"
+                    BorderBrush="#DDD"
+                    BorderThickness="1"
+                    CornerRadius="6">
+
+                <DockPanel LastChildFill="True">
+
+                    <TextBox x:Name="RepackSearchBox"
+                             DockPanel.Dock="Top"
+                             Style="{StaticResource WatermarkTextBox}"
+                             Tag="Search bulk item..."
+                             TextChanged="RepackSearchBox_TextChanged"
+                             Margin="0,0,0,10"/>
+
+                    <ListBox x:Name="RepackItemList"
+                             FontSize="14"
+                             DisplayMemberPath="Name"
+                             SelectionChanged="RepackItemList_SelectionChanged"/>
+                </DockPanel>
+            </Border>
+
+            <!-- ================= RIGHT : SALE RULES ================= -->
+            <Border Grid.Column="1"
+                    Padding="18"
+                    Background="#FAFAFA"
+                    BorderBrush="#DDD"
+                    BorderThickness="1"
+                    CornerRadius="6">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/> <!-- HEADER -->
+                        <RowDefinition Height="Auto"/> <!-- META -->
+                        <RowDefinition Height="Auto"/> <!-- ADD PANEL -->
+                        <RowDefinition Height="*"/>    <!-- GRID -->
+                        <RowDefinition Height="Auto"/> <!-- ACTIONS -->
+                    </Grid.RowDefinitions>
+
+                    <!-- HEADER -->
+                    <StackPanel Grid.Row="0" Margin="0,0,0,10">
+                        <TextBlock Text="Sale Rules (Repack)"
+                                   FontSize="18"
+                                   FontWeight="SemiBold"/>
+
+                        <TextBlock x:Name="RepackSelectedItemText"
+                                   Text="Select a bulk item"
+                                   Foreground="#666"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+
+                    <!-- ITEM META -->
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                Margin="0,0,0,12">
+
+                        <TextBlock Text="Stock Unit:"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,6,0"/>
+
+                        <TextBlock x:Name="RepackStockUnitText"
+                                   Text="—"/>
+
+                        <TextBlock Text="   Available:"
+                                   FontWeight="SemiBold"
+                                   Margin="20,0,6,0"/>
+
+                        <TextBlock x:Name="RepackAvailableStockText"
+                                   Text="—"/>
+                    </StackPanel>
+
+                    <!-- ADD SALE RULE PANEL -->
+                    <Border x:Name="AddRepackRulePanel"
+                            Grid.Row="2"
+                            Margin="0,0,0,12"
+                            Padding="16"
+                            Background="White"
+                            BorderBrush="#CCC"
+                            BorderThickness="1"
+                            CornerRadius="6"
+                            HorizontalAlignment="Left"
+                            Visibility="Collapsed">
+
+                        <StackPanel>
+
+                            <TextBlock Text="Add Sale Rule"
+                                       FontSize="16"
+                                       FontWeight="SemiBold"
+                                       Margin="0,0,0,10"/>
+
+                            <TextBlock x:Name="AddRuleItemText"
+                                       Foreground="#555"
+                                       Margin="0,0,0,6"/>
+
+                            <TextBlock x:Name="AddRuleUnitText"
+                                       Foreground="#555"
+                                       Margin="0,0,0,12"/>
+
+                            <TextBlock Text="Sell Amount"
+                                       FontWeight="SemiBold"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,6,0,12">
+                                <TextBox x:Name="AddRuleQuantityBox"
+                                         Width="120"
+                                         Height="32"/>
+
+                                <TextBlock x:Name="AddRuleUnitSuffix"
+                                           Margin="10,0,0,0"
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <TextBlock Text="Price (KES)"
+                                       FontWeight="SemiBold"
+                                       />
+
+                            <TextBox x:Name="AddRulePriceBox"
+                                     Width="120"
+                                     Height="32"
+                                     Margin="0,6,0,12"
+                                     />
+
+                            <CheckBox x:Name="AddRuleActiveCheck"
+                                      Content="Active"
+                                      IsChecked="True"
+                                      Margin="0,0,0,14"/>
+
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Right">
+
+                                <Button Content="SAVE"
+                                        Width="90"
+                                        Height="34"
+                                        Margin="0,0,10,0"
+                                        Click="SaveAddRepackRule_Click"/>
+
+                                <Button Content="CANCEL"
+                                        Width="90"
+                                        Height="34"
+                                        Click="CancelAddRepackRule_Click"/>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </Border>
+
+                    <!-- RULES GRID -->
+                    <DataGrid x:Name="RepackRulesGrid"
+                              Grid.Row="3"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              CanUserAddRows="False"
+                              HeadersVisibility="Column"
+                              GridLinesVisibility="None"
+                              FontSize="14"
+                              RowHeight="34"
+                              SelectionMode="Single"
+                                SelectionUnit="FullRow"
+                                SelectionChanged="RepackRulesGrid_SelectionChanged">
+                                                
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="UnitValue"
+                                                Binding="{Binding UnitValue}"
+                                                Width="100"/>
+
+                            <DataGridTextColumn Header="Unit"
+                                                Binding="{Binding UnitType}"
+                                                Width="80"/>
+
+                            <DataGridTextColumn Header="Selling Price"
+                                                Binding="{Binding SellingPrice}"
+                                                Width="120"/>
+
+                            <DataGridCheckBoxColumn Header="Active"
+                                                    Binding="{Binding IsActive}"
+                                                    Width="80"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- ACTIONS -->
+                    <StackPanel Grid.Row="4"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Margin="0,12,0,0">
+                    <Button Content="Move to Repack"
+                                Width="140"
+                                Height="36"
+                                Margin="0,0,10,0"
+                                Click="MoveToRepack_Click"/>
+
+                        <Button Content="➕ Add Sale Rule"
+                                Width="140"
+                                Height="36"
+                                Margin="0,0,10,0"
+                                Click="OpenAddRepackRule_Click"/>
+
+                        <Button Content="✏ Edit"
+                                Width="80"
+                                Height="36"
+                                Margin="0,0,10,0"
+                                Click="EditRepackRule_Click"/>
+
+                        <Button Content="❌ Disable"
+                                Width="90"
+                                Height="36"
+                                Margin="0,0,10,0"
+                                Click="DisableRepackRule_Click"/>
+
+                        <Button Content="🗑 Delete"
+                                Width="90"
+                                Height="36"
+                                Background="#E53935"
+                                Foreground="White"
+                                Click="DeleteRepackRule_Click"/>
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</TabItem>
+
+
+
+<!--========= LOCATION ===========-->
+<TabItem Header="Locations" x:Name="LocationsTab" Tag="stock.location">
+    <Grid Margin="10">
+        <!-- Outer grid: divide into 3 columns -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/> <!-- Left Panel -->
+                <ColumnDefinition Width="*"/>   <!-- Center Panel -->
+                <ColumnDefinition Width="200"/> <!-- Right Panel -->
+            </Grid.ColumnDefinitions>
+
+            <!-- LEFT PANEL: Root Selection -->
+            <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1" CornerRadius="4" Padding="5">
+                <StackPanel VerticalAlignment="Top">
+                    <TextBlock Text="Select Root" FontWeight="Bold" Margin="0,0,0,10"/>
+                    <Button x:Name="BackroomButton" Content="Store (Backroom)" Margin="0,0,0,5" Click="RootButton_Click"/>
+                    <Button x:Name="ShopFloorButton" Content="Shop Floor" Click="RootButton_Click"/>
+                </StackPanel>
+            </Border>
+
+            <!-- CENTER PANEL: TreeView -->
+            <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1" CornerRadius="4" Padding="5">
+                <StackPanel>
+                    <!-- Header: shows selected root -->
+                    <TextBlock x:Name="SelectedRootText" Text="Select a root..." FontWeight="Bold" FontSize="14" Margin="0,0,0,10"/>
+
+                    <!-- TreeView: sections and shelves -->
+                    <TreeView x:Name="LocationsTree" FontSize="14" SelectedItemChanged="LocationsTree_SelectedItemChanged"/>
+                </StackPanel>
+            </Border>
+
+            <!-- RIGHT PANEL: Actions -->
+            <Border Grid.Column="2" BorderBrush="Gray" BorderThickness="1" CornerRadius="4" Padding="5">
+                <StackPanel VerticalAlignment="Top">
+                    <!-- Label + TextBox for new node name -->
+                    <TextBlock Text="New Section/Shelf Name" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <TextBox x:Name="NewNodeNameBox" Width="150" Height="25" Margin="0,0,0,10"/>
+
+                    <!-- Action buttons -->
+                    <Button Content="+ Add Section" Width="150" Margin="0,0,0,5" Click="AddSection_Click"/>
+                    <Button Content="+ Add Shelf" Width="150" Margin="0,0,0,5" Click="AddShelf_Click"/>
+                    <Button Content="Edit Selected" Width="150" Margin="0,0,0,5" Click="EditSelected_Click"/>
+                    <Button Content="Delete Selected" Width="150" Click="DeleteSelected_Click"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</TabItem>
+
+
+   <!-- ================= MOVE STOCK TAB ================= -->
+<TabItem Header="Move Stock" x:Name="MoveStockTab" Tag="stock.move">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- LEFT: Search & Add -->
+        <Border Grid.Column="0"
+                Background="#FAFAFA"
+                Padding="12"
+                CornerRadius="6"
+                BorderBrush="#DDD"
+                BorderThickness="1">
+
+            <StackPanel>
+                <TextBox x:Name="MoveSearchBox"
+                         Style="{StaticResource WatermarkTextBox}"
+                         Tag="🔍 Search item by name / barcode"
+                         Margin="0,0,0,10"
+                         TextChanged="MoveSearchBox_TextChanged"/>
+
+              <ListBox x:Name="MoveSearchList"
+                SelectionChanged="MoveSearchList_SelectionChanged"
+         MouseDoubleClick="MoveSearchList_MouseDoubleClick"
+         SelectionMode="Single"
+         Height="150"
+         FontSize="14">
+    <ListBox.ItemTemplate>
+        <DataTemplate>
+            <StackPanel>
+                <TextBlock Text="{Binding Name}" FontSize="14"/>
+                <TextBlock Text="{Binding Quantity, StringFormat=Qty: {0}}" FontSize="12"/>
+            </StackPanel>
+        </DataTemplate>
+    </ListBox.ItemTemplate>
+</ListBox>
+
+
+
+<!-- Checked items list with proper column alignment -->
+<ListView x:Name="CheckedItemsList"
+          Height="200"
+          ScrollViewer.VerticalScrollBarVisibility="Auto"
+          FontSize="14"
+          BorderThickness="1"
+          BorderBrush="#DDD">
+    
+    <!-- Define columns -->
+    <ListView.View>
+        <GridView>
+            <!-- Checkbox column -->
+            <GridViewColumn Width="30">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <CheckBox IsChecked="{Binding IsSelected}" HorizontalAlignment="Center"/>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+
+            <!-- Item Name column -->
+            <GridViewColumn
+                 Header="Item Name" 
+                 Width="160"
+                DisplayMemberBinding="{Binding Name}"/>
+
+            <!-- Quantity column -->
+            <GridViewColumn Header="Qty" 
+                            Width="80" 
+                            DisplayMemberBinding="{Binding Quantity}"/>
+        </GridView>
+    </ListView.View>
+</ListView>
+
+
+                <Button Content="➕ Add to Movement"
+                        Margin="0,10,0,0"
+                        Height="36"
+                        Background="#1E88E5"
+                        Foreground="White"
+                        Click="OpenMovementRulePopup_Click"/>
+            </StackPanel>
+        </Border>
+
+        <!-- RIGHT: Assigned Stock -->
+        <Border Grid.Column="2"
+                Background="#FAFAFA"
+                Padding="12"
+                CornerRadius="6"
+                BorderBrush="#DDD"
+                BorderThickness="1">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <DataGrid x:Name="AssignedStockGrid"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          HeadersVisibility="Column"
+                          GridLinesVisibility="None"
+                          RowHeight="36"
+                          FontSize="14">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Item" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="Qty" Binding="{Binding Quantity}" Width="80"/>
+                        <DataGridTextColumn Header="From" Binding="{Binding FromLocation}" Width="120"/>
+                        <DataGridTextColumn Header="To" Binding="{Binding ToLocation}" Width="120"/>
+
+                        <DataGridTemplateColumn Header="Actions" Width="120">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        
+                                        <Button Content="🗑"
+                                                Width="30"
+                                                Height="28"
+                                                Click="RemoveAssigned_Click"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!-- Bottom buttons -->
+                <StackPanel Grid.Row="1"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Margin="0,10,0,0">
+
+                    <Button Content="Clear All"
+                            Width="100"
+                            Height="34"
+                            Click="ClearAllAssigned_Click"/>
+
+                    <Button Content="Move Stock ✔"
+                            Width="140"
+                            Height="34"
+                            Background="#43A047"
+                            Foreground="White"
+                            Click="ExecuteMoveStock_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+<Border x:Name="MovementRulePopup"
+        Background="White"
+        BorderBrush="#DDD"
+        BorderThickness="1"
+        CornerRadius="6"
+        Padding="16"
+        Width="320"
+        Height="300"
+        Visibility="Collapsed"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Top">
+
+    <Border.Effect>
+        <DropShadowEffect Color="Black"
+                          Direction="270"
+                          ShadowDepth="5"
+                          Opacity="0.3"
+                          BlurRadius="12"/>
+    </Border.Effect>
+
+    <StackPanel>
+        <TextBlock Text="Assign Movement Rule"
+                   FontSize="16"
+                   FontWeight="SemiBold"
+                   Margin="0,0,0,10"/>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="From:" Width="50"/>
+            <ComboBox x:Name="FromLocationCombo" Width="200" SelectionChanged="FromLocationCombo_SelectionChanged"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="To:" Width="50"/>
+            <ComboBox x:Name="ToLocationCombo" Width="200" SelectionChanged="ToLocationCombo_SelectionChanged"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Section:" Width="50"/>
+            <ComboBox x:Name="SectionCombo" Width="200" SelectionChanged="SectionCombo_SelectionChanged"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Shelf:" Width="50"/>
+            <ComboBox x:Name="ShelfCombo" Width="200"/>
+        </StackPanel>
+
+        <TextBlock Text="Reason" Margin="0,0,0,4"/>
+        <ComboBox x:Name="ReasonCombo" Width="260" Margin="0,0,0,10">
+            <ComboBoxItem Content="Restock"/>
+            <ComboBoxItem Content="Other"/>
+        </ComboBox>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Cancel"
+                    Width="90"
+                    Margin="0,0,10,0"
+                    Click="CloseMovementRulePopup_Click"/>
+
+            <Button Content="Assign Rule"
+                    Width="120"
+                    Background="#43A047"
+                    Foreground="White"
+                    Click="AssignRule_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Border>
+    </Grid>
+</TabItem>
+
+<TabItem Header="Returns" Tag="stock.returns">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Return Type Selection -->
+            <RowDefinition Height="*"/>    <!-- Dynamic Content Panel -->
+        </Grid.RowDefinitions>
+
+        <!-- Return Type Selection -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+            <TextBlock Text="Return Type:" VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="Bold"/>
+            <ComboBox x:Name="ReturnTypeCombo" Width="220" SelectionChanged="ReturnTypeCombo_SelectionChanged">
+                <ComboBoxItem Content="Customer Return"/>
+                <ComboBoxItem Content="Supplier Return"/>
+            </ComboBox>
+        </StackPanel>
+
+        <!-- Dynamic Content -->
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Width="780" Margin="0,0,0,20">
+
+            <!-- Customer Return Panel -->
+            <Border x:Name="CustomerReturnPanel" BorderBrush="Gray" BorderThickness="1" CornerRadius="6"
+                    Padding="15" Margin="0,0,0,20" Visibility="Collapsed" Background="White">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+
+                    <TextBlock Text="CUSTOMER RETURN" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+                    <!-- Search by Receipt -->
+                   <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,0,0,10">
+
+    <TextBox x:Name="CustomerReceiptSearchBox"
+             Width="450"
+             Height="30"
+             TextChanged="CustomerReceiptSearchBox_TextChanged"
+             Tag="Enter Receipt Number"
+             Style="{StaticResource WatermarkTextBoxWithBorder}"/>
+
+    <ListBox x:Name="CustomerItemSuggestions"
+             Width="450"
+             Height="120"
+             Visibility="Collapsed"
+             SelectionChanged="CustomerItemSuggestions_SelectionChanged"/>
+</StackPanel>
+
+                    <!-- Sale Info -->
+                    <TextBlock x:Name="CustomerSaleInfo" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+  
+                    <!-- Items Grid -->
+                    <DataGrid x:Name="CustomerItemsGrid" AutoGenerateColumns="False" CanUserAddRows="False" Height="250" Margin="0,0,0,10" Width="740">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Header="Select" Binding="{Binding Selected}" Width="50"/>
+                            <DataGridTextColumn Header="Item Name" Binding="{Binding ItemName}" Width="*"/>
+                            <DataGridTextColumn Header="Sold Qty" Binding="{Binding SoldQty}" Width="100"/>
+                            <DataGridTextColumn Header="Already Returned" Binding="{Binding AlreadyReturned}" Width="120"/>
+                            <DataGridTemplateColumn Header="Return Qty" Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding ReturnQty, UpdateSourceTrigger=PropertyChanged}" 
+                                                 Width="60" HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- Return Details -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+                    <ComboBox x:Name="CustomerReasonCombo" Width="220" Margin="0,0,10,0" SelectedIndex="0">
+                        <ComboBoxItem Content="Select Reason"/>
+                        <ComboBoxItem Content="Customer Changed Mind"/>
+                        <ComboBoxItem Content="Damaged"/>
+                        <ComboBoxItem Content="Expired"/>
+                    </ComboBox>
+
+                    <ComboBox x:Name="CustomerRefundMethodCombo" Width="160" Margin="0,0,10,0" SelectedIndex="0">
+                        <ComboBoxItem Content="Select Method"/>
+                        <ComboBoxItem Content="Cash"/>
+                        <ComboBoxItem Content="M-Pesa"/>
+                    </ComboBox>
+                        <CheckBox x:Name="CustomerRestockCheck" Content="Restock Items" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- Buttons -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                        <Button Content="Process Return" Background="Blue" Foreground = "White" Height = "24"  Width="160" Margin="5" Click="CustomerProcessReturn_Click"/>
+                        <Button Content="Cancel" Background="#E53935" Foreground = "White" Height = "24"   Width="120" Margin="5" Click="CustomerCancelReturn_Click"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+
+            <!-- Supplier Return Panel -->
+            <Border x:Name="SupplierReturnPanel" BorderBrush="Gray" BorderThickness="1" CornerRadius="6"
+                    Padding="15" Margin="0,0,0,20" Background="White" Visibility="Visible">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+
+                    <TextBlock Text="SUPPLIER RETURN" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+                    <!-- Supplier Selection -->
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,0,0,10">
+
+                        <TextBlock Text="Supplier:" FontWeight="SemiBold"/>
+
+                        <ComboBox x:Name="SupplierSearchCombo"
+                                Width="250"
+                                Height="30"
+                                IsEditable="True"
+                                IsTextSearchEnabled="False"
+                                StaysOpenOnEdit="True"
+                                TextBoxBase.TextChanged="SupplierSearchCombo_TextChanged"/>
+
+                    </StackPanel>
+
+                   <!-- Item Search with Autocomplete -->
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,0,0,10">
+                        <TextBox x:Name="SupplierItemSearchBox" Height="30" Width="260" 
+                                Tag="Search Item or Barcode" Style="{StaticResource WatermarkTextBoxWithBorder}"
+                                TextChanged="SupplierItemSearchBox_TextChanged"/>
+                        
+                        <!-- Autocomplete suggestions list -->
+                        <ListBox x:Name="SupplierItemSuggestions" Width="260" Height="50" Visibility="Collapsed"
+                                SelectionChanged="SupplierItemSuggestions_SelectionChanged"/>
+                    </StackPanel>
+
+                    <!-- Items Grid -->
+                    <DataGrid x:Name="SupplierItemsGrid"
+          AutoGenerateColumns="False"
+          CanUserAddRows="False"
+          Height="220"
+          Margin="0,0,0,10">
+
+    <DataGrid.Columns>
+
+        <DataGridCheckBoxColumn Header="Select"
+                                Binding="{Binding Selected}"
+                                Width="50"/>
+
+        <DataGridTextColumn Header="Item Name"
+                            Binding="{Binding ItemName}"
+                            Width="*"/>
+
+        <DataGridTextColumn Header="Current Stock"
+                            Binding="{Binding Stock}"
+                            Width="100"/>
+
+        <!-- Quantity -->
+        <DataGridTextColumn Header="Return Qty"
+                            Binding="{Binding ReturnQty}"
+                            Width="100"/>
+
+        <!-- Reason -->
+        <DataGridComboBoxColumn Header="Reason"
+                                SelectedItemBinding="{Binding Reason}"
+                                Width="120">
+            <DataGridComboBoxColumn.ItemsSource>
+                <x:Array Type="sys:String"
+                         xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                    <sys:String>Damaged</sys:String>
+                    <sys:String>Expired</sys:String>
+                    <sys:String>Others</sys:String>
+                </x:Array>
+            </DataGridComboBoxColumn.ItemsSource>
+        </DataGridComboBoxColumn>
+
+    </DataGrid.Columns>
+
+</DataGrid>
+                    <!-- Selected Item Details -->
+                    <TextBlock x:Name="SupplierItemDetails" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+                    
+
+                    <!-- Buttons -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                        <Button Content="Send Supplier Return" Height = "24" Background = "Blue" Foreground = "White" Width="180" Margin="5" Click="SupplierProcessReturn_Click"/>
+                        <Button Content="Cancel" Background="#E53935" Height = "24" Foreground = "White" Width="120" Margin="5" Click="SupplierCancelReturn_Click"/>
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+
+    </Grid>
+    </ScrollViewer>
+</TabItem>
+
+        </TabControl>
+    </Grid>
+</Window>

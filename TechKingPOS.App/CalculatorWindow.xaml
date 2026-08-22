@@ -1,0 +1,50 @@
+<Window x:Class="TechKingPOS.App.CalculatorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Calculator"
+        Height="400"
+        Width="300"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        WindowStyle="ToolWindow"
+        Background="White">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Display -->
+        <TextBox x:Name="DisplayBox"
+                 FontSize="28"
+                 Height="60"
+                 IsReadOnly="True"
+                 TextAlignment="Right"
+                 VerticalContentAlignment="Center"
+                 Margin="0,0,0,10"/>
+
+        <!-- Buttons -->
+        <UniformGrid Grid.Row="1" Columns="4">
+            <Button Content="7" Click="Button_Click"/>
+            <Button Content="8" Click="Button_Click"/>
+            <Button Content="9" Click="Button_Click"/>
+            <Button Content="/" Click="Button_Click"/>
+
+            <Button Content="4" Click="Button_Click"/>
+            <Button Content="5" Click="Button_Click"/>
+            <Button Content="6" Click="Button_Click"/>
+            <Button Content="*" Click="Button_Click"/>
+
+            <Button Content="1" Click="Button_Click"/>
+            <Button Content="2" Click="Button_Click"/>
+            <Button Content="3" Click="Button_Click"/>
+            <Button Content="-" Click="Button_Click"/>
+
+            <Button Content="0" Click="Button_Click"/>
+            <Button Content="C" Click="Clear_Click"/>
+            <Button Content="=" Click="Equals_Click"/>
+            <Button Content="+" Click="Button_Click"/>
+        </UniformGrid>
+    </Grid>
+</Window>

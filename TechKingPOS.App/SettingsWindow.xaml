@@ -1,0 +1,606 @@
+<Window x:Class="TechKingPOS.App.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Settings"
+        Width="1000"
+        Height="650"
+        Background="#F4F6F8"
+        WindowStartupLocation="CenterScreen">
+        <Window.Resources>
+
+    <!-- LEFT MENU BUTTON STYLE -->
+ <Style x:Key="LeftMenuButtonStyle" TargetType="Button">
+    <Setter Property="Height" Value="44"/>
+    <Setter Property="Margin" Value="0,4"/>
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="Foreground" Value="#546E7A"/>
+    <Setter Property="BorderThickness" Value="0"/>
+    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+    <Setter Property="Cursor" Value="Hand"/>
+    <Setter Property="Tag" Value="False"/> <!-- We'll use Tag=True for active -->
+
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="Button">
+                <Border x:Name="Root"
+                        CornerRadius="6"
+                        Background="{TemplateBinding Background}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border x:Name="Accent"
+                                Grid.Column="0"
+                                Background="Transparent"/>
+
+                        <ContentPresenter Grid.Column="1"
+                                          VerticalAlignment="Center"
+                                          Margin="12,0"/>
+                    </Grid>
+                </Border>
+
+                <ControlTemplate.Triggers>
+
+                    <!-- Hover -->
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="#1E88E5"/>
+                        <Setter TargetName="Root" Property="Background" Value="#E3F2FD"/>
+                        <Setter TargetName="Accent" Property="Background" Value="#1E88E5"/>
+                    </Trigger>
+
+                    <!-- Pressed -->
+                    <Trigger Property="IsPressed" Value="True">
+                        <Setter TargetName="Root" Property="Background" Value="#BBDEFB"/>
+                    </Trigger>
+
+                    <!-- Disabled -->
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Opacity" Value="0.5"/>
+                    </Trigger>
+
+                    <!-- Active/Selected -->
+                    <Trigger Property="Tag" Value="True">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter TargetName="Root" Property="Background" Value="#1976D2"/>
+                        <Setter TargetName="Accent" Property="Background" Value="#FFC107"/>
+                    </Trigger>
+
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
+</Window.Resources>
+
+
+    <Grid Margin="16">
+
+        <!-- MAIN GRID -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="240"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ================= LEFT MENU ================= -->
+        <Border Background="White"
+                CornerRadius="8"
+                Padding="12"
+                Margin="0,0,12,0">
+<StackPanel>
+
+    <TextBlock Text="Settings"
+               FontSize="20"
+               FontWeight="Bold"
+               Margin="8,0,0,16"/>
+
+    <Button x:Name="BusinessButton" Style="{StaticResource LeftMenuButtonStyle}"
+            Click="Business_Click">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="🏢" FontSize="16" Margin="0,0,10,0"
+                       Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+            <TextBlock Text="Business" FontSize="14" FontWeight="SemiBold"/>
+        </StackPanel>
+    </Button>
+
+    <Button x:Name="ReceiptButton" Style="{StaticResource LeftMenuButtonStyle}"
+            Click="Receipt_Click">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="🧾" FontSize="16" Margin="0,0,10,0"
+                       Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+            <TextBlock Text="Receipt &amp; Print" FontSize="14" FontWeight="SemiBold"/>
+        </StackPanel>
+    </Button>
+
+    <Button x:Name="SalesButton" Style="{StaticResource LeftMenuButtonStyle}"
+            Click="Sales_Click">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="💳" FontSize="16" Margin="0,0,10,0"
+                       Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+            <TextBlock Text="Sales &amp; Payment" FontSize="14" FontWeight="SemiBold"/>
+        </StackPanel>
+    </Button>
+
+    <Button x:Name="UsersButton" Style="{StaticResource LeftMenuButtonStyle}"
+            Click="Users_Click">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="👤" FontSize="16" Margin="0,0,10,0"
+                       Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+            <TextBlock Text="Users &amp; Security" FontSize="14" FontWeight="SemiBold"/>
+        </StackPanel>
+    </Button>
+
+    <Button x:Name="SystemButton" Style="{StaticResource LeftMenuButtonStyle}"
+            Click="System_Click">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="⚙" FontSize="16" Margin="0,0,10,0"
+                       Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+            <TextBlock Text="System" FontSize="14" FontWeight="SemiBold"/>
+        </StackPanel>
+    </Button>
+
+</StackPanel>
+
+        </Border>
+
+        <!-- ================= RIGHT CONTENT ================= -->
+        <Border Grid.Column="1"
+                Background="White"
+                CornerRadius="8"
+                Padding="20">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- ================= SCROLLABLE CONTENT ================= -->
+<ScrollViewer Grid.Row="0"
+              VerticalScrollBarVisibility="Auto"
+              HorizontalScrollBarVisibility="Disabled">
+
+    <Grid HorizontalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+
+                        <!-- ================= BUSINESS ================= -->
+<StackPanel x:Name="BusinessPanel" Margin="0,0,0,0">
+
+    <TextBlock Text="Business Settings"
+               FontSize="20"
+               FontWeight="Bold"
+               Margin="0,0,0,24"/>
+
+    <!-- Grid for labels and inputs -->
+    <Grid HorizontalAlignment="Stretch" MaxWidth="600">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"/> <!-- Label -->
+            <ColumnDefinition Width="*"/>   <!-- Input -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Define 6 rows for 6 fields -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Business Name -->
+            <RowDefinition Height="Auto"/> <!-- Branch Name -->
+            <RowDefinition Height="Auto"/> <!-- Phone -->
+            <RowDefinition Height="Auto"/> <!-- Email -->
+            <RowDefinition Height="Auto"/> <!-- Address -->
+            <RowDefinition Height="Auto"/> <!-- Footer -->
+            <RowDefinition Height="Auto"/> <!-- Footer -->
+        </Grid.RowDefinitions>
+
+        <!-- BUSINESS NAME -->
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Business Name" VerticalAlignment="Center" Margin="0,0,8,8"/>
+        <TextBox Grid.Row="0" Grid.Column="1" x:Name="BusinessNameBox" Height="38" Margin="0,0,0,8"/>
+
+        <!-- BRANCH NAME -->
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Branch Name" VerticalAlignment="Center" Margin="0,0,8,8"/>
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="BranchNameBox" Height="38" Margin="0,0,0,8"/>
+
+        <!-- PHONE -->
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Phone Number" VerticalAlignment="Center" Margin="0,0,8,8"/>
+        <TextBox Grid.Row="2" Grid.Column="1" x:Name="PhoneBox" Height="38" Margin="0,0,0,8"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Secondary Phone" VerticalAlignment="Center" Margin="0,0,8,8"/>
+        <TextBox Grid.Row="3" Grid.Column="1" x:Name="SecondaryPhoneBox" Height="38" Margin="0,0,0,8"/>
+
+
+        <!-- EMAIL -->
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Email Address" VerticalAlignment="Center" Margin="0,0,8,8"/>
+        <TextBox Grid.Row="4" Grid.Column="1" x:Name="EmailBox" Height="38" Margin="0,0,0,8"/>
+
+        <!-- ADDRESS -->
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Business Address" VerticalAlignment="Top" Margin="0,0,8,8"/>
+        <TextBox Grid.Row="5" Grid.Column="1" x:Name="AddressBox" Height="60" AcceptsReturn="True" TextWrapping="Wrap" Margin="0,0,0,8"/>
+
+        <!-- FOOTER -->
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Receipt Footer Message" VerticalAlignment="Top" Margin="0,0,8,0"/>
+        <TextBox Grid.Row="6" Grid.Column="1" x:Name="FooterBox" Height="60" AcceptsReturn="True" TextWrapping="Wrap"/>
+    </Grid>
+
+</StackPanel>
+
+
+
+                        <!-- ================= RECEIPT ================= -->
+                        <StackPanel x:Name="ReceiptPanel" Visibility="Collapsed">
+                            <TextBlock Text="Receipt &amp; Print Settings"
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       Margin="0,0,0,20"/>
+
+                    <CheckBox x:Name="AutoPrintReceiptCheck"
+                            Content="Auto-print receipt after sale"/>
+
+                    <CheckBox x:Name="ShowCashierCheck"
+                            Content="Show cashier name on receipt"
+                            Margin="0,8,0,0"/>
+                    <CheckBox x:Name="SignReceipt"
+                            Content="Sign on the receipt"
+                            Margin="0,8,0,0"/>
+
+                    <CheckBox x:Name="ShowLogoCheck"
+                            Content="Show logo on receipt"
+                            Margin="0,8,0,0"/>
+                    <Separator Margin="0,12"/>
+
+                    <TextBlock Text="Receipt Logo" FontWeight="Bold" Margin="0,8,0,4"/>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="80" Height="80" Background="#EEE" CornerRadius="6">
+                            <Image x:Name="LogoPreview" Stretch="Uniform"/>
+                        </Border>
+
+                        <StackPanel Margin="12,0,0,0">
+                            <Button Content="Upload Logo"
+                                    Width="120"
+                                    Height="32"
+                                    Click="UploadLogo_Click"/>
+
+                            <Button Content="Remove"
+                                    Width="120"
+                                    Height="32"
+                                    Margin="0,6,0,0"
+                                    Click="RemoveLogo_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                    
+
+                            <TextBlock Text="Paper Size" Margin="0,12,0,2"/>
+
+                            <ComboBox x:Name="PaperSizeCombo"
+                                    Height="36"
+                                    MaxWidth="200">
+                                <ComboBoxItem Content="58mm"/>
+                                <ComboBoxItem Content="80mm"/>
+                                <Separator/>
+
+                                <ComboBoxItem Content="A4"/>
+                                <ComboBoxItem Content="A5"/>
+                                <ComboBoxItem Content="A6"/>
+
+                                <Separator/>
+
+                                <ComboBoxItem Content="Letter"/>
+                                <ComboBoxItem Content="Legal"/>
+                                <ComboBoxItem Content="DL Envelope"/>
+
+                            </ComboBox>
+                            <TextBlock Text="Layout Type"
+                                    Margin="0,12,0,2"/>
+
+                            <ComboBox x:Name="PrintLayoutCombo"
+                                    Height="36"
+                                    Width="200">
+
+                                <ComboBoxItem Content="Thermal Receipt"/>
+                                <ComboBoxItem Content="Invoice"/>
+
+                            </ComboBox>
+
+                            <TextBlock Text="Receipt Copies" Margin="0,12,0,2"/>
+
+                            <TextBox x:Name="ReceiptCopiesBox"
+                                    Height="36"
+                                    MaxWidth="120"/>
+
+                        </StackPanel>
+
+                        <!-- ================= SALES & PAYMENT ================= -->
+                    <StackPanel x:Name="SalesPanel" Visibility="Collapsed">
+
+                        <TextBlock Text="Sales &amp; Payment Settings"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                Margin="0,0,0,20"/>
+
+                        <CheckBox x:Name="AllowNegativeStockCheck"
+                                Content="Allow negative stock"
+                                Margin="0,12,0,0"/>
+
+                        <CheckBox x:Name="AllowPriceEditCheck"
+                                Content="Allow price editing during sale (Admin)"
+                                Margin="0,8,0,0"/>
+
+                        <CheckBox x:Name="EnableCreditSalesCheck"
+                                Content="Enable credit sales"
+                                Margin="0,8,0,0"/>
+
+                        <Separator Margin="0,12"/>
+
+                        <CheckBox x:Name="VatEnabledCheck"
+                                Content="Enable VAT"/>
+
+                        <TextBlock Text="VAT Percentage"
+                                Margin="0,8,0,2"/>
+
+                        <TextBox x:Name="VatPercentBox"
+                                Height="36"
+                                MaxWidth="120"/>
+                            <!-- ================= eTIMS ================= -->
+
+                    <Separator Margin="0,16"/>
+
+                    <TextBlock Text="eTIMS Settings"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Margin="0,0,0,10"/>
+
+                    <CheckBox x:Name="EnableEtimsCheck"
+                            Content="Enable Electronic Tax Invoice (eTIMS)"
+                            FontWeight="Bold"
+                            Margin="0,0,0,12"/>
+
+                    <TextBlock Text="KRA PIN"
+                            Margin="0,4,0,2"/>
+
+                    <TextBox x:Name="KraPinBox"
+                            Height="36"
+                            MaxWidth="300"/>
+
+                    <TextBlock Text="Branch ID (BHF ID)"
+                            Margin="0,10,0,2"/>
+
+                    <TextBox x:Name="BhfIdBox"
+                            Height="36"
+                            MaxWidth="300"/>
+
+                    <TextBlock Text="Device Serial Number"
+                            Margin="0,10,0,2"/>
+
+                    <TextBox x:Name="DeviceSerialBox"
+                            Height="36"
+                            MaxWidth="300"/>
+
+                    <TextBlock Text="Operator ID"
+                            Margin="0,10,0,2"/>
+
+                    <TextBox x:Name="EtimsUsernameBox"
+                            Height="36"
+                            MaxWidth="300"/>
+
+                    <TextBlock Text="Operator Password"
+                            Margin="0,10,0,2"/>
+
+                    <PasswordBox x:Name="EtimsPasswordBox"
+                                Height="36"
+                                MaxWidth="300"/>
+
+                    <TextBlock Text="Business Location / Branch Code (Optional)"
+                            Margin="0,10,0,2"/>
+
+                    <TextBox x:Name="BusinessLocationBox"
+                            Height="36"
+                            MaxWidth="300"/>
+
+
+
+                            <Separator Margin="0,16"/>
+
+                            <TextBlock Text="Discount Settings"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       Margin="0,0,0,10"/>
+
+                            <CheckBox x:Name="EnableDiscountCheck"
+                                      Content="Enable Discounts"
+                                      FontWeight="Bold"
+                                      Margin="0,0,0,10"/>
+
+                            <CheckBox x:Name="FixedDiscountCheck"
+                                      Content="Allow Fixed Amount Discount"/>
+
+                            <StackPanel Margin="20,4,0,10">
+                                <TextBlock Text="Maximum Fixed Discount Amount (KES)"/>
+                                <TextBox x:Name="MaxFixedDiscountBox" Height="36" Width="140"/>
+                            </StackPanel>
+
+                            <CheckBox x:Name="PercentageDiscountCheck"
+                                      Content="Allow Percentage Discount"/>
+
+                            <StackPanel Margin="20,4,0,10">
+                                <TextBlock Text="Maximum Percentage Discount (%)"/>
+                                <TextBox x:Name="MaxPercentageDiscountBox" Height="36" Width="120"/>
+                            </StackPanel>
+
+                            <Separator Margin="0,16"/>
+
+                            <CheckBox x:Name="ConditionalDiscountCheck"
+                                      Content="Enable Conditional Discount"
+                                      Margin="0,10,0,6"/>
+
+                            <StackPanel Margin="20,0,0,0">
+
+                                <TextBlock Text="Discount Value Type" FontWeight="Bold"/>
+
+                                <StackPanel Orientation="Horizontal" Margin="0,4,0,10">
+                                    <RadioButton x:Name="CondValueFixed"
+                                                 Content="Fixed Amount (KES)"
+                                                 IsChecked="True"
+                                                 Margin="0,0,20,0"/>
+                                    <RadioButton x:Name="CondValuePercent"
+                                                 Content="Percentage (%)"/>
+                                </StackPanel>
+
+                                <TextBlock Text="Discount Based On" FontWeight="Bold"/>
+
+                                <StackPanel Orientation="Horizontal" Margin="0,4,0,10">
+                                   
+                                    <RadioButton x:Name="CondBasedRanges"
+                                                 Content="Sales Ranges"
+                                                 IsChecked="True"/>
+                                </StackPanel>
+
+
+                                <StackPanel x:Name="RangeSalesPanel">
+
+                                    <TextBlock Text="Discount Type: Percentage (%)"
+                                               FontStyle="Italic"
+                                               Margin="0,0,0,6"/>
+
+                                    <TextBlock Text="Sales Range Rules"
+                                               FontWeight="Bold"
+                                               Margin="0,4,0,6"/>
+
+                                    <DataGrid x:Name="RangesGrid"
+                                              Height="200"
+                                              AutoGenerateColumns="False"
+                                              CanUserAddRows="False"
+                                              ItemsSource="{Binding}"
+                                              HeadersVisibility="Column">
+
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="From (KES)" Binding="{Binding From}" Width="*"/>
+                                            <DataGridTextColumn Header="To (KES)" Binding="{Binding To}" Width="*"/>
+                                            <DataGridTextColumn  x:Name="DiscountColumn"
+                                                Header="Discount (%)" Binding="{Binding DiscountPercent}" Width="*"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+
+                                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                        <Button Content="+ Add Range"
+                                                Width="120"
+                                                Height="34"
+                                                Margin="0,0,10,0"
+                                                Click="AddRange_Click"/>
+                                        <Button Content="🗑 Remove Selected"
+                                                Width="160"
+                                                Height="34"
+                                                Click="RemoveRange_Click"/>
+                                    </StackPanel>
+
+                                </StackPanel>
+
+                            </StackPanel>
+                        </StackPanel>
+
+                <!-- ================= USERS ================= -->
+                <StackPanel x:Name="UsersPanel" Visibility="Collapsed">
+                    <TextBlock Text="Users &amp; Security"
+                            FontSize="20"
+                            FontWeight="Bold"
+                            Margin="0,0,0,20"/>
+
+                    <CheckBox x:Name="RequireLoginCheck"
+                            Content="Require login on app start"/>
+
+                    <CheckBox x:Name="AutoLogoutCheck"
+                            Content="Auto logout after inactivity"
+                            Margin="0,8,0,0"/>
+
+                    <CheckBox x:Name="AllowVoidSalesCheck"
+                            Content="Allow workers to cancel sales"
+                            Margin="0,12,0,0"/>
+
+                    <CheckBox x:Name="AllowEditPricesCheck"
+                            Content="Allow workers to edit prices"
+                            Margin="0,8,0,0"/>
+
+                    <CheckBox x:Name="AllowGiveDiscountsCheck"
+                            Content="Allow workers to give discounts"
+                            Margin="0,8,0,0"/>
+            
+
+                        <!-- TWO COLUMN GRID -->
+                 </StackPanel>
+
+
+
+                        <!-- ================= SYSTEM ================= -->
+                        <StackPanel x:Name="SystemPanel" Visibility="Collapsed">
+                            <TextBlock Text="System Settings"
+                                       FontSize="20"
+                                       FontWeight="Bold"
+                                       Margin="0,0,0,20"/>
+
+                            <TextBlock FontSize="14" Text="License Status"/>
+                            <TextBox  x:Name="LicenseStatusBox"
+                                        Height="36" 
+                                        IsReadOnly="True"
+                                        Width="260"
+                                        FontWeight="Bold"
+                                        BorderThickness="0"
+                                        Margin = "0,-10,0,0"
+                                        FontSize="16"
+                                        VerticalContentAlignment="Center"/>
+
+                            <TextBlock FontSize="14" Text="License Expiry" Margin="0,0,0,2"/>
+                            <TextBox  x:Name="LicenseExpiryBox"
+                                        Height="36" 
+                                        IsReadOnly="True" 
+                                        FontWeight="Bold"
+                                        BorderThickness="0"
+                                        Margin = "0,-10,0,0"
+                                        FontSize="16"
+                                        Width="260"
+                                        VerticalContentAlignment="Center"/>
+
+                            <TextBlock Text="License Key" Margin="0,0,0,2" FontSize="14"/>
+                            <TextBox x:Name="LicenseKeyBox"
+                                        Height="36"
+                                        Width="260"
+                                        Margin="0,-10,0,0"
+                                        BorderThickness="1"
+                                        VerticalContentAlignment="Center"
+                                        Foreground="Gray"
+                                        Text="Enter license key"
+                                        GotFocus="LicenseKeyBox_GotFocus"
+                                        LostFocus="LicenseKeyBox_LostFocus"/>
+
+
+                            <Button Content="Activate License"
+                                    Width="160"
+                                    Height="38"
+                                    Background="#1976D2"
+                                    Foreground="White"
+                                    FontWeight="Bold"
+                                    Margin="0,16,0,0"
+                                    Click="ActivateLicense_Click"/>
+                                     <Separator Margin="0,12"/>
+                        </StackPanel>
+
+                       
+
+                    </Grid>
+                </ScrollViewer>
+
+                <!-- ================= SAVE BUTTON ================= -->
+                <Button Grid.Row="1"
+                        Content="💾 Save Changes"
+                        Height="44"
+                        Background="#1976D2"
+                        Foreground="White"
+                        FontWeight="Bold"
+                        Margin="0,8,0,20"
+                        HorizontalAlignment="Right"
+                        Click="SaveChanges_Click"/>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

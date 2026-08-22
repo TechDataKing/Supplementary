@@ -1,0 +1,222 @@
+// 1️⃣ What a complete POS reporting system usually includes
+
+// A solid POS normally has 5–7 major report categories:
+
+// A. Sales & Revenue
+
+// Daily / weekly / monthly sales
+
+// Total sales
+
+// Profit (sales – cost)
+
+// Number of receipts
+
+// Payment method split (Cash, Mpesa, Mixed)
+
+// Best-selling items
+
+// Low-performing items
+
+// 👉 You already have most of this
+
+// B. Inventory & Stock
+
+// Out of stock items
+
+// Running low items
+
+// Overstocked items
+
+// Stock valuation (cost value of inventory)
+
+// Stock movement (what came in vs sold)
+
+// 👉 You have Out / Low / Good, but not valuation or movement (yet)
+
+// C. Credit & Debtors
+
+// All customers on credit
+
+// Outstanding balances
+
+// Credit aging (0–7 days, 8–30 days, 30+ days)
+
+// Payments history
+
+// Total credit exposure (credit book)
+
+// 👉 You have the core, but it can be smarter
+
+// D. Expenses (VERY IMPORTANT – missing)
+
+// Electricity
+
+// Rent
+
+// Internet
+
+// Workers salaries
+
+// Transport
+
+// Misc expenses
+
+// 👉 This is completely missing and you’re right to add it
+
+// E. Workers / Payroll
+
+// Total wages paid
+
+// Advances given
+
+// Salary balance
+
+// Sales by cashier (who sold what)
+
+// 👉 Currently missing
+
+// F. Profit & Loss (Summary)
+
+// Total sales
+
+// Total expenses
+
+// Gross profit
+
+// Net profit
+
+// 👉 This becomes the business health dashboard
+
+// G. Audit / Activity (optional later)
+
+// Voided receipts
+
+// Deleted items
+
+// Price overrides
+
+// User activity
+
+/*┌──────────────────────────────────────────────────────────────┐
+│                    PROFIT & LOSS REPORT                      │
+└──────────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────┐
+│  From: [  Date  ]   To: [  Date  ]   [ Today ] [ This Month ]│
+└──────────────────────────────────────────────────────────────┘
+
+
+┌───────────────┬───────────────┬───────────────┬──────────────┐
+│ TOTAL SALES   │ TOTAL EXPENSE │ GROSS PROFIT  │ NET PROFIT   │
+│               │               │               │              │
+│   125,000     │    72,000     │   53,000      │   53,000     │
+└───────────────┴───────────────┴───────────────┴──────────────┘
+
+
+┌──────────────────────────────────────────────────────────────┐
+│ STATUS: ✔ BUSINESS IS PROFITABLE                             │
+└──────────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────┬──────────────────────────────┐
+│        EXPENSE BREAKDOWN     │        SALES BREAKDOWN       │
+├──────────────────────────────┼──────────────────────────────┤
+│ Category        | Amount     │ Payment Method | Amount     │
+│──────────────────────────────│──────────────────────────────│
+│ Electricity     |  6,000     │ Cash           |  58,000    │
+│ Salaries        | 35,000     │ Mpesa          |  42,000    │
+│ Rent            | 20,000     │ Credit         |  25,000    │
+│ Transport       |  4,000     │                |            │
+│ Misc            |  7,000     │                |            │
+│──────────────────────────────│──────────────────────────────│
+│ TOTAL           | 72,000     │ TOTAL          | 125,000    │
+└──────────────────────────────┴──────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────────┐
+│                PROFIT & LOSS SUMMARY TABLE                   │
+├──────────────────────────────────────────────────────────────┤
+│ Total Sales .................................... 125,000     │
+│ Total Expenses ................................. 72,000      │
+│--------------------------------------------------------------│
+│ Net Profit ..................................... 53,000      │
+└──────────────────────────────────────────────────────────────┘
+*/
+ext = "DELETE FROM Items WHERE Id = $id;";
+            cmd.Parameters.AddWithValue("$id", id);
+
+
+
+
+//finish sales logic
+manage stock 
+permissin in settings
+reports 
+
+
+
+Item created
+
+Stock added
+
+Stock reduced (sale / damage)
+
+Target set
+
+Item edited
+
+Item deleted
+
+Sale made
+
+Payment received
+
+Credit created
+
+Credit payment
+
+Expense added
+
+Worker created / disabled
+
+Settings changed
+
+                    Background="#E0E7FF"
+
+
+===========================================================================
+===========================----- DEV NOTES -----====================
+
+
+//======== CIF ========//
+sudo mount -t cifs //10.72.215.38/techKingPOS /home/kennchan/mnt/techKingPOS -o username=Walter,uid=$(id -u),gid=$(id -g),vers=3.0
+
+
+//=====================----- PUBLISH ------====================  
+//======================------------------====================
+
+dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeAllContentForSelfExtract=true /p:EnableCompressionInSingleFile=true
+
+
+//======= WINE PATH ======//
+$ find ~/.wine/drive_c/ -name ISCC.exe
+/home/kennchan/.wine/drive_c/Program Files (x86)/Inno Setup 6/ISCC.exe
+wine "/home/kennchan/.wine/drive_c/Program Files (x86)/Inno Setup 6/ISCC.exe" "C:\techKingPOS\TechKingPOS.App\Installer.iss"
+
+///====== WINE COPY =====//
+cp -r /home/kennchan/mnt/techKingPOS/TechKingPOS.App ~/.wine/drive_c/Program\ Files\ \(x86\)/Inno\ Setup\ 6/TechKingPOS.App
+cp -r /home/kennchan/mnt/techKingPOS/TechKingPOS.App ~/.wine/drive_c/techKingPOS/
+
+//===== GUI =====///
+wine "/home/kennchan/.wine/drive_c/Program Files (x86)/Inno Setup 6/Compil32.exe"
+
+///====== CLI =====///
+wine "/home/kennchan/.wine/drive_c/Program Files (x86)/Inno Setup 6/ISCC.exe" "C:\techKingPOS\TechKingPOS.App\Installer.iss"
+///===========FINAL INSTALLER CODE ===========///
+ wine "/home/kennchan/.wine/drive_c/Program Files (x86)/Inno Setup 6/ISCC.exe" "Z:\home\kennchan\mnt\techKingPOS\TechKingPOS.App\Installer.iss"
+
+ ////=============== to  crete and publish installer 
+dotnet publish -c Release -r win-x64 --self-contained false
+& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" Installer.iss

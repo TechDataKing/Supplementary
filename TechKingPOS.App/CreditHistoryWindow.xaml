@@ -1,0 +1,44 @@
+<Window x:Class="TechKingPOS.App.CreditHistoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Credit History" 
+        Height="500" 
+        Width="800"
+        WindowStartupLocation="CenterScreen">
+<Grid Margin="10">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <!-- FILTER -->
+    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+        <DatePicker x:Name="FromDate" Width="120"/>
+        <DatePicker x:Name="ToDate" Width="120" Margin="10,0"/>
+        <Button Content="Filter" Width="100" Margin="10,0" Click="Filter_Click"/>
+    </StackPanel>
+
+    <!-- BUTTONS -->
+    <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,10">
+        <Button Content="Print" Width="100" Margin="0,0,10,0" Click="Print_Click"/>
+        <Button Content="Excel" Width="100" Margin="0,0,10,0" Click="ExportExcel_Click"/>
+        <Button Visibility= "Collapsed" Content="PDF" Width="100" Click="ExportPdf_Click"/>
+    </StackPanel>
+
+    <!-- DataGrid -->
+   <DataGrid x:Name="HistoryGrid"
+          Grid.Row="2"
+          AutoGenerateColumns="False"
+          IsReadOnly="True">
+
+    <DataGrid.Columns>
+        <DataGridTextColumn Header="Date" Binding="{Binding CreatedAt}" Width="150"/>
+        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="200"/>
+        <DataGridTextColumn Header="DR" Binding="{Binding Debit}" Width="100"/>
+        <DataGridTextColumn Header="CR" Binding="{Binding Credit}" Width="100"/>
+        <DataGridTextColumn Header="Balance" Binding="{Binding Balance}" Width="120"/>
+    </DataGrid.Columns>
+</DataGrid>
+</Grid>
+</Window>
